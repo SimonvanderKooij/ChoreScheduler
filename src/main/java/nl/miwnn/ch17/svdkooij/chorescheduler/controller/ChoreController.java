@@ -25,7 +25,7 @@ public class ChoreController {
         this.choreRepository = choreRepository;
     }
 
-    @GetMapping({"/book/all", "/"})
+    @GetMapping({"/chore/all", "/"})
     private String showChoreOverview(Model datamodel) {
 
         datamodel.addAttribute("chores", choreRepository.findAll());
@@ -46,7 +46,7 @@ public class ChoreController {
             choreRepository.save(chore);
         }
 
-        return "redirect:/book/all";
+        return "redirect:/chore/all";
 
     }
 }
