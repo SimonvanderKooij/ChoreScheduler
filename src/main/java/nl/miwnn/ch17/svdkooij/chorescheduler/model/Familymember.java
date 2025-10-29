@@ -18,12 +18,11 @@ public class Familymember {
     @Id @GeneratedValue
     Long memberID;
     String memberName;
-    LocalTime memberTime;
 
-    public Familymember(Long memberID, String memberName, LocalTime memberTime) {
+
+    public Familymember(Long memberID, String memberName, LocalTime expectedTime) {
         this.memberID = memberID;
         this.memberName = memberName;
-        this.memberTime = memberTime;
     }
 
     public Familymember() {
@@ -46,11 +45,5 @@ public class Familymember {
         this.memberName = choreName;
     }
 
-    public LocalTime getMemberTime() {
-        return memberTime;
-    }
 
-    public void setMemberTime(LocalTime choreTime) {
-        this.memberTime = choreTime;
-    }
 }

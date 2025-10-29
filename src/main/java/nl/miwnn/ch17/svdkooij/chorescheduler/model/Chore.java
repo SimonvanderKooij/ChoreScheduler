@@ -18,12 +18,12 @@ public class Chore {
     @Id @GeneratedValue
     Long choreID;
     String choreName;
-    LocalTime choreTime;
+    LocalTime choreDuration;
 
     public Chore(Long choreID, String choreName, LocalTime choreTime) {
         this.choreID = choreID;
         this.choreName = choreName;
-        this.choreTime = choreTime;
+        this.choreDuration = choreTime;
     }
 
     public Chore() {
@@ -47,10 +47,10 @@ public class Chore {
     }
 
     public LocalTime getChoreTime() {
-        return choreTime;
+        return choreDuration;
     }
 
     public void setChoreTime(LocalTime choreTime) {
-        this.choreTime = choreTime;
+        this.choreDuration = choreTime;
     }
 }

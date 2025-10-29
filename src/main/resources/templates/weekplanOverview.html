@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Overview of all the chores</title>
+</head>
+<body>
+
+<h1>Overview of all the chores</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Chore</th>
+        <th>Time spent</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="chore : ${chores}">
+        <td th:text="${chore.choreName}">Chore name</td>
+        <td th:text="${chore.choreTime}">Chore time</td>
+        <td><a th:href="@{/chore/edit/{choreID}(choreID = ${chore.choreID})}">edit</a></td>
+        <td><a th:href="@{/chore/delete/{choreID}(choreID = ${chore.choreID})}">delete</a></td> <!--  {choreID} is een placeholder-->
+
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/chore/add}">Add a new chore</a>
+
+</body>
+
+</html>
