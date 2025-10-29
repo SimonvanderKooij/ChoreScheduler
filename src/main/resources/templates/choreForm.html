@@ -9,6 +9,7 @@
 <h1>Add a new chore</h1>
 
 <form th:action="@{/chore/save}" method="post" th:object="${formChore}">
+    <input type="hidden" th:field="*{choreID}"/>
     Chore: <input type="text" th:field="*{choreName}">
     Time: <input type="time" th:field="*{choreTime}">
     <input type="submit" value="Save chore">

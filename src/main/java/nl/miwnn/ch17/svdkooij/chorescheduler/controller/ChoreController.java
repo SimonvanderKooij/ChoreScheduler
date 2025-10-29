@@ -7,9 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * @author Simon van der Kooij
@@ -37,7 +38,7 @@ public class ChoreController {
     private String showChoreForm(Model datamodel) {
         datamodel.addAttribute("formChore", new Chore());
 
-        return "ChoreForm";
+        return "choreForm";
     }
 
     @PostMapping("/chore/save")
@@ -47,6 +48,23 @@ public class ChoreController {
         }
 
         return "redirect:/chore/all";
+    }
 
+    @GetMapping("/chore/delete/{choreID}")
+    public String deleteChore(@PathVariable("choreID") Long choreID) {
+        choreRepository.deleteById(choreID);
+        return "redirect:/chore/all";
+    }
+
+    @GetMapping("/chore/edit/{choreID}")
+    public String editChore(@PathVariable("choreID") Long choreID, Model datamodel) {
+        Optional<Chore> optionalChore = choreRepository.findById(choreID);
+
+        if (optionalChore.isPresent()) {
+            datamodel.addAttribute("formChore", optionalChore.get());
+            return "choreForm";
+        }
+
+        return "redirect:/chore/all";
     }
 }

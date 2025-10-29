@@ -10,13 +10,17 @@
 <table>
     <thead>
     <tr>
-        <th>Taak</th>
+        <th>Chore</th>
+        <th>Time spent</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="chore : ${chores}">
         <td th:text="${chore.choreName}">Chore name</td>
         <td th:text="${chore.choreTime}">Chore time</td>
+        <td><a th:href="@{/chore/edit/{choreID}(choreID = ${chore.choreID})}">edit</a></td>
+        <td><a th:href="@{/chore/delete/{choreID}(choreID = ${chore.choreID})}">delete</a></td> <!--  {choreID} is een placeholder-->
+
     </tr>
     </tbody>
 </table>
