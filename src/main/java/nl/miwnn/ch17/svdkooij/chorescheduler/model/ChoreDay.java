@@ -8,15 +8,15 @@ import java.time.LocalDate;
 
 /**
  * @author Simon van der Kooij
- * The date wherein chores are planned and are assigned to day names
+ * The name that can be given to a certain date.
  */
 
-public class ChoreDate {
+public class ChoreDay {
 
     @Id
     @GeneratedValue
-    private Long choreDateID;
+    private Long choreDayID;
 
-    private LocalDate dueDate;
+    private String dayName;
 
 }
