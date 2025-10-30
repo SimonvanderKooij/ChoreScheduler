@@ -55,9 +55,21 @@ public class ScheduleController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deletePlanning(@PathVariable("id") Long scheduleID, Model datamode) {
+    public String deletePlanning(@PathVariable("id") Long scheduleID, Model datamodel) {
         scheduleRepository.deleteById(scheduleID);
         return "redirect:/schedule/";
+    }
+
+    @GetMapping("/detail/{dueDate}")
+    public String showDetailView(@PathVariable("dueDate") String dueDate, Model datamodel) {
+        Optional<Schedule> scheduleToShow = scheduleRepository.findByDueDate(LocalDate.parse(dueDate));
+
+        if (scheduleToShow.isEmpty()) {
+            return "redirect:/schedule/all";
+        }
+
+        datamodel.addAttribute("schedule", scheduleToShow.get());
+        return "scheduleDetailView";
     }
 
     @PostMapping("/save")

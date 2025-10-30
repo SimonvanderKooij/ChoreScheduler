@@ -5,7 +5,9 @@ import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.util.Optional;
 
 /**
@@ -27,12 +28,10 @@ public class ChoreController {
 
     private final ChoreRepository choreRepository;
     private final FamilyMemberRepository familyMemberRepository;
-    private final ScheduleRepository scheduleRepository;
 
-    public ChoreController(ChoreRepository choreRepository, FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository) {
+    public ChoreController(ChoreRepository choreRepository, FamilyMemberRepository familyMemberRepository) {
         this.choreRepository = choreRepository;
         this.familyMemberRepository = familyMemberRepository;
-        this.scheduleRepository = scheduleRepository;
     }
 
     @GetMapping({"/chore/all", "/", "/chore"})
@@ -64,16 +63,16 @@ public class ChoreController {
         Optional<Chore> chore = choreRepository.findById(choreID);
 
         if (chore.isPresent()) {
-            System.err.println("is aanwezig");
-            if (chore.get().getSchedules() == null || chore.get().getSchedules().isEmpty()) {
-                System.err.println("is leeg");
-            } else {
-                System.err.println("Deze chore komt in " + chore.get().getSchedules().size() + " schedules voor.");
-            }
+            Chore choreToBeDeleted = chore.get();
+
+//            for (Schedule schedule : choreToBeDeleted.getSchedules() ) {
+//                System.err.println("S: " + schedule);
+//            }
+            choreRepository.deleteById(choreID);
         }
 
 
-            //choreRepository.deleteById(choreID);
+
 
         return "redirect:/chore/all";
     }

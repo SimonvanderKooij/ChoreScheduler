@@ -2,32 +2,32 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Overview of all the chores</title>
+    <title>Detailview Chores on one day</title>
 </head>
 <body>
 
-<h1>Overview of all the chores</h1>
+<h1>Details of the chores on
+    <span th:text="${schedule.getDayOfWeek()}"></span>
+    <span th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></span></h1>
 <table>
     <thead>
     <tr>
         <th>Chore</th>
-        <th>Time spent</th>
+        <th>Duration</th>
         <th>Specialist</th>
+        <th>Status</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="chore : ${chores}">
+    <tr th:each="chore : ${schedule.chores}">
         <td th:text="${chore.choreName}">Chore name</td>
         <td th:text="${chore.choreDuration}">Chore Duration</td>
         <td th:text="${chore.familymember.memberName}">Specialist </td>
-        <td><a th:href="@{/chore/edit/{choreID}(choreID = ${chore.choreID})}">edit</a></td>
-        <td><a th:href="@{/chore/delete/{choreID}(choreID = ${chore.choreID})}">delete</a></td> <!--  {choreID} is een placeholder-->
-
     </tr>
     </tbody>
 </table>
 
-<a th:href="@{/chore/add}">Add a new chore</a>
+<a th:href="@{/schedule/plan}">Plan some more chores</a>
 
 </body>
 

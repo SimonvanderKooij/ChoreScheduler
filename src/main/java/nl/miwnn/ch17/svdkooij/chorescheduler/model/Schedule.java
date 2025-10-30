@@ -4,6 +4,7 @@ package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -35,6 +36,10 @@ public class Schedule {
     public Schedule() {
     }
 
+    public DayOfWeek getDayOfWeek() {
+        return dueDate.getDayOfWeek();
+    }
+
     public Long getScheduleID() {
         return scheduleID;
     }
@@ -57,5 +62,10 @@ public class Schedule {
 
     public void setChores(Set<Chore> chores) {
         this.chores = chores;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("scheduleID: %s, dueDate: %s, chores: %s", this.scheduleID, this.dueDate, this.chores);
     }
 }
