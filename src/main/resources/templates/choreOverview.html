@@ -17,7 +17,7 @@
     <tbody>
     <tr th:each="chore : ${chores}">
         <td th:text="${chore.choreName}">Chore name</td>
-        <td th:text="${chore.choreTime}">Chore time</td>
+        <td th:text="${chore.choreDuration}">Chore Duration</td>
         <td><a th:href="@{/chore/edit/{choreID}(choreID = ${chore.choreID})}">edit</a></td>
         <td><a th:href="@{/chore/delete/{choreID}(choreID = ${chore.choreID})}">delete</a></td> <!--  {choreID} is een placeholder-->
 

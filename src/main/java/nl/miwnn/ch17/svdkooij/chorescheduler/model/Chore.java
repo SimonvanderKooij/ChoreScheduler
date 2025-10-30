@@ -1,11 +1,9 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 /**
  * @author Simon van der Kooij
@@ -16,18 +14,32 @@ import java.time.LocalTime;
 public class Chore {
 
     @Id @GeneratedValue
-    Long choreID;
-    String choreName;
-    LocalTime choreDuration;
+    private Long choreID;
+    private String choreName;
+    private LocalTime choreDuration;
 
-    public Chore(Long choreID, String choreName, LocalTime choreTime) {
+    @ManyToOne
+    @JoinColumn(name = "familymember_member_id")
+    private FamilyMember familymember;
+
+    @ManyToMany
+    private Set<Schedule> schedules;
+
+    public FamilyMember getFamilymember() {
+        return familymember;
+    }
+
+    public void setFamilyMember(FamilyMember familymember) {
+        this.familymember = familymember;
+    }
+
+    public Chore(Long choreID, String choreName, LocalTime choreDuration) {
         this.choreID = choreID;
         this.choreName = choreName;
-        this.choreDuration = choreTime;
+        this.choreDuration = choreDuration;
     }
 
     public Chore() {
-
     }
 
     public Long getChoreID() {
@@ -46,11 +58,15 @@ public class Chore {
         this.choreName = choreName;
     }
 
-    public LocalTime getChoreTime() {
+    public LocalTime getChoreDuration() {
         return choreDuration;
     }
 
-    public void setChoreTime(LocalTime choreTime) {
-        this.choreDuration = choreTime;
+    public void setChoreDuration(LocalTime choreDuration) {
+        this.choreDuration = choreDuration;
+    }
+
+    public Set<Schedule> getSchedules() {
+        return schedules;
     }
 }

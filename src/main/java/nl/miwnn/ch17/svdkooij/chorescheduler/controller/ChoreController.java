@@ -1,7 +1,10 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.controller;
 
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.Chore;
+import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
+import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
+import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 /**
@@ -21,12 +26,16 @@ import java.util.Optional;
 public class ChoreController {
 
     private final ChoreRepository choreRepository;
+    private final FamilyMemberRepository familyMemberRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    public ChoreController(ChoreRepository choreRepository) {
+    public ChoreController(ChoreRepository choreRepository, FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository) {
         this.choreRepository = choreRepository;
+        this.familyMemberRepository = familyMemberRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
-    @GetMapping({"/chore/all", "/"})
+    @GetMapping({"/chore/all", "/", "/chore"})
     private String showChoreOverview(Model datamodel) {
 
         datamodel.addAttribute("chores", choreRepository.findAll());
@@ -35,8 +44,8 @@ public class ChoreController {
     }
 
     @GetMapping("/chore/add")
-    private String showChoreForm(Model datamodel) {
-        datamodel.addAttribute("formChore", new Chore());
+    private String addChore(Model datamodel) {
+        showChoreForm(datamodel, new Chore());
 
         return "choreForm";
     }
@@ -52,7 +61,20 @@ public class ChoreController {
 
     @GetMapping("/chore/delete/{choreID}")
     public String deleteChore(@PathVariable("choreID") Long choreID) {
-        choreRepository.deleteById(choreID);
+        Optional<Chore> chore = choreRepository.findById(choreID);
+
+        if (chore.isPresent()) {
+            System.err.println("is aanwezig");
+            if (chore.get().getSchedules() == null || chore.get().getSchedules().isEmpty()) {
+                System.err.println("is leeg");
+            } else {
+                System.err.println("Deze chore komt in " + chore.get().getSchedules().size() + " schedules voor.");
+            }
+        }
+
+
+            //choreRepository.deleteById(choreID);
+
         return "redirect:/chore/all";
     }
 
@@ -60,11 +82,17 @@ public class ChoreController {
     public String editChore(@PathVariable("choreID") Long choreID, Model datamodel) {
         Optional<Chore> optionalChore = choreRepository.findById(choreID);
 
+
         if (optionalChore.isPresent()) {
-            datamodel.addAttribute("formChore", optionalChore.get());
-            return "choreForm";
+            return showChoreForm(datamodel, optionalChore.get());
         }
 
         return "redirect:/chore/all";
+    }
+
+    private String showChoreForm(Model datamodel, Chore chore) {
+        datamodel.addAttribute("formChore", chore);
+        datamodel.addAttribute("allMembers", familyMemberRepository.findAll());
+        return "choreForm";
     }
 }

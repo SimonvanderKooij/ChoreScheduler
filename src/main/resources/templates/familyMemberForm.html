@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add anew family member</title>
+</head>
+<body>
+
+<h1>Add a new family member</h1>
+
+<form th:action="@{/familymember/save}" method="post" th:object="${formMember}">
+    <input type="hidden" th:field="*{memberID}"/>
+    Name: <input type="text" th:field="*{memberName}" required>
+    <input type="submit" value="Save family member">
+</form>
+
+</body>
+</html>

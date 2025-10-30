@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Overview of all family members</title>
+</head>
+<body>
+
+<h1>Overview of all family members</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="familyMember : ${allFamilyMembers}">
+        <td th:text="${familyMember.memberName}"></td>
+        <td><a th:href="@{/familymember/edit/{memberName}(memberName = ${familyMember.memberName})}">edit</a></td>
+        <td><a th:href="@{/familymember/delete/{memberID}(memberID = ${familyMember.memberID})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/familymember/add}">add another family member</a>
+
+</body>
+
+</html>

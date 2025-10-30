@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Overview of all scheduled chores</title>
+</head>
+<body>
+
+<h1>Overview of all scheduled chores</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule : ${allScheduledChores}">
+        <td th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></td>
+        <td><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}">edit</a></td>
+        <td><a th:href="@{/schedule/delete/{scheduleID}(scheduleID = ${schedule.scheduleID})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/schedule/plan}">Plan some more chores</a>
+
+</body>
+
+</html>
