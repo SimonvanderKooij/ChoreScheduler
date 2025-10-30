@@ -27,7 +27,7 @@
     </tbody>
 </table>
 
-<a th:href="@{/schedule/plan}">Plan some more chores</a>
+<a th:href="@{/schedule/edit/{dueDate}(dueDate = ${schedule.dueDate})}">Add some more chores to this day</a>
 
 </body>
 

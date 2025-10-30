@@ -92,9 +92,7 @@ public class ScheduleController {
         scheduleRepository.save(scheduleToBeSaved);
 
         return "redirect:/schedule/";
-
     }
-
 
     private String showPlanningForm(Model datamodel, Schedule schedule) {
         datamodel.addAttribute("formPlanning", schedule);
