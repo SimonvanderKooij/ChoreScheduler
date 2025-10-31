@@ -53,7 +53,7 @@ public class ChoreController {
     public String saveOrUpdateChore(@ModelAttribute("formChore") Chore chore, BindingResult result) {
 
         System.err.println(chore);
-        
+
         if (!result.hasErrors()) {
             choreRepository.save(chore);
         }
@@ -68,9 +68,10 @@ public class ChoreController {
         if (chore.isPresent()) {
             Chore choreToBeDeleted = chore.get();
 
-//            for (Schedule schedule : choreToBeDeleted.getSchedules() ) {
-//                System.err.println("S: " + schedule);
-//            }
+            for (Schedule schedule : choreToBeDeleted.getSchedules() ) {
+                schedule.getChores().remove(choreToBeDeleted);
+            }
+
             choreRepository.deleteById(choreID);
         }
 

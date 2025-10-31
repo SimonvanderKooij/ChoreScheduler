@@ -1,6 +1,5 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 
-
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
