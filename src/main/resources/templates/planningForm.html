@@ -13,7 +13,7 @@
     Date: <input type="date" th:field="*{dueDate}" required>
     Chores: <select th:field="*{chores}" multiple required>
             <option th:each="chore : ${allChores}"
-                    th:text="${chore.choreName} + ' (door ' + ${chore.familymember.memberName} + ')'"
+                    th:text="${chore.choreName} + ' (door ' + ${chore.familyMember.memberName} + ')'"
                     th:value="${chore.choreID}">
             </option>
 </select>

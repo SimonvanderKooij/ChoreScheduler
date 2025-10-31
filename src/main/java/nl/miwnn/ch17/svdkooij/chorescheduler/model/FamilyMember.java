@@ -1,9 +1,10 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.time.LocalTime;
+import java.util.Set;
 
 /**
  * @author Simon van der Kooij
@@ -13,17 +14,32 @@ import jakarta.persistence.Id;
 @Entity
 public class FamilyMember {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     Long memberID;
-
     String memberName;
 
-    public FamilyMember(Long memberID, String memberName) {
+    @OneToMany(mappedBy = "familyMember")
+    private Set<Chore> chores;
+
+    public FamilyMember(Long memberID, String memberName, Set<Chore> chores) {
         this.memberID = memberID;
         this.memberName = memberName;
+        this.chores = chores;
     }
 
     public FamilyMember() {
+    }
+
+    public LocalTime getTotalChoreTimeOutOfAllChores() {
+        LocalTime totalChoreTime = LocalTime.of(0, 0);
+
+        for (Chore chore : chores) {
+            totalChoreTime = totalChoreTime.plusHours(chore.getTotalChoreTimeOutOfAllSchedules(this).getHour())
+                    .plusMinutes(chore.getTotalChoreTimeOutOfAllSchedules(this).getMinute());
+
+        }
+        return totalChoreTime;
     }
 
     public Long getMemberID() {
@@ -41,4 +57,5 @@ public class FamilyMember {
     public void setMemberName(String memberName) {
         this.memberName = memberName;
     }
+
 }

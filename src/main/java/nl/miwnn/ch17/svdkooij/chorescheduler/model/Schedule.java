@@ -1,11 +1,11 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 
-
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 /**
@@ -38,6 +38,19 @@ public class Schedule {
 
     public DayOfWeek getDayOfWeek() {
         return dueDate.getDayOfWeek();
+    }
+
+    public LocalTime getTotalChoreTime(FamilyMember familyMember) {
+        LocalTime totalChoreTime = LocalTime.of(0, 0);
+
+        for (Chore chore : chores) {
+            if (chore.getFamilyMember() == familyMember) {
+                totalChoreTime = totalChoreTime .plusHours(chore.getChoreDuration().getHour())
+                                                .plusMinutes(chore.getChoreDuration().getMinute());
+            }
+        }
+
+        return totalChoreTime;
     }
 
     public Long getScheduleID() {

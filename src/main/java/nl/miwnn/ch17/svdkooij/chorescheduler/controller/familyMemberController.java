@@ -2,8 +2,8 @@ package nl.miwnn.ch17.svdkooij.chorescheduler.controller;
 
 
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.FamilyMember;
-import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
+import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,14 +22,17 @@ import java.util.Optional;
 public class familyMemberController {
 
     private final FamilyMemberRepository familyMemberRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    public familyMemberController(FamilyMemberRepository familyMemberRepository) {
+    public familyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository) {
         this.familyMemberRepository = familyMemberRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     @GetMapping({"/all", "/"})
     public String showAllFamilyMembers(Model datamodel) {
         datamodel.addAttribute("allFamilyMembers", familyMemberRepository.findAll());
+        datamodel.addAttribute("allScheduledChores", scheduleRepository.findAll());
 
         return "familyMemberOverview";
     }

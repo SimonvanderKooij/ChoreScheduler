@@ -13,25 +13,17 @@ import java.util.Set;
 @Entity
 public class Chore {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long choreID;
     private String choreName;
     private LocalTime choreDuration;
 
     @ManyToOne
-    @JoinColumn(name = "familymember_member_id")
-    private FamilyMember familymember;
+    private FamilyMember familyMember;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "chores")
     private Set<Schedule> schedules;
-
-    public FamilyMember getFamilymember() {
-        return familymember;
-    }
-
-    public void setFamilyMember(FamilyMember familymember) {
-        this.familymember = familymember;
-    }
 
     public Chore(Long choreID, String choreName, LocalTime choreDuration) {
         this.choreID = choreID;
@@ -40,6 +32,18 @@ public class Chore {
     }
 
     public Chore() {
+    }
+
+    public LocalTime getTotalChoreTimeOutOfAllSchedules(FamilyMember familyMember) {
+        LocalTime totalChoreTime = LocalTime.of(0, 0);
+
+        for (Schedule schedule : schedules) {
+
+            totalChoreTime = totalChoreTime.plusHours(schedule.getTotalChoreTime(familyMember).getHour())
+                    .plusMinutes(schedule.getTotalChoreTime(familyMember).getMinute());
+        }
+
+        return totalChoreTime;
     }
 
     public Long getChoreID() {
@@ -66,7 +70,16 @@ public class Chore {
         this.choreDuration = choreDuration;
     }
 
+    public FamilyMember getFamilyMember() {
+        return familyMember;
+    }
+
+    public void setFamilyMember(FamilyMember familyMember) {
+        this.familyMember = familyMember;
+    }
+
     public Set<Schedule> getSchedules() {
         return schedules;
     }
+
 }

@@ -51,6 +51,9 @@ public class ChoreController {
 
     @PostMapping("/chore/save")
     public String saveOrUpdateChore(@ModelAttribute("formChore") Chore chore, BindingResult result) {
+
+        System.err.println(chore);
+        
         if (!result.hasErrors()) {
             choreRepository.save(chore);
         }

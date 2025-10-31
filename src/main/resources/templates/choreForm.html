@@ -6,13 +6,13 @@
 </head>
 <body>
 
-<h1>Add a new chore</h1>
+<h1>Add or edit a new chore</h1>
 
 <form th:action="@{/chore/save}" method="post" th:object="${formChore}">
     <input type="hidden" th:field="*{choreID}"/>
     Chore: <input type="text" th:field="*{choreName}" required>
     Time: <input type="time" th:field="*{choreDuration}" required>
-    Family member: <select th:field="*{familymember}" required>
+    Family member: <select th:field="*{familyMember}" required>
     <option th:each="member : ${allMembers}"
             th:text="${member.memberName}"
             th:value="${member.memberID}">

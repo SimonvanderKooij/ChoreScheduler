@@ -15,14 +15,15 @@
         <th>Chore</th>
         <th>Duration</th>
         <th>Specialist</th>
-        <th>Status</th>
+        <th>Total time</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="chore : ${schedule.chores}">
         <td th:text="${chore.choreName}">Chore name</td>
         <td th:text="${chore.choreDuration}">Chore Duration</td>
-        <td th:text="${chore.familymember.memberName}">Specialist </td>
+        <td th:text="${chore.familyMember.memberName}">Specialist </td>
+        <td th:text="${schedule.getTotalChoreTime(chore.familyMember)}"></td>
     </tr>
     </tbody>
 </table>
