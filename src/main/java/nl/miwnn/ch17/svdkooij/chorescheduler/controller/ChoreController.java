@@ -4,10 +4,7 @@ import nl.miwnn.ch17.svdkooij.chorescheduler.model.Chore;
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
-import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +31,7 @@ public class ChoreController {
         this.familyMemberRepository = familyMemberRepository;
     }
 
-    @GetMapping({"/chore/all", "/", "/chore"})
+    @GetMapping({"/chore/all", "/", "/chore", "/chores"})
     private String showChoreOverview(Model datamodel) {
 
         datamodel.addAttribute("chores", choreRepository.findAll());

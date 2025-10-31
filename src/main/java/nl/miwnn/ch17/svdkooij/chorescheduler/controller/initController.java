@@ -42,6 +42,7 @@ public class initController {
             makeFamilyMember("Lilian");
             makeFamilyMember("Nova");
             makeFamilyMember("Joas");
+            makeFamilyMember("Not yet assigned");
 
             Chore stofzuigen = makeChore("Stofzuigen", LocalTime.of(0,30), "Joas");
             Chore vaatwasser = makeChore("Vaatwasser uitruimen", LocalTime.of(0,15), "Nova");

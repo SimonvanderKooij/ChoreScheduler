@@ -18,8 +18,8 @@
     <tr th:each="familyMember : ${allFamilyMembers}">
         <td th:text="${familyMember.memberName}"></td>
         <td th:text="${familyMember.getTotalChoreTimeOutOfAllChores()}"></td>
-        <td><a th:href="@{/familymember/edit/{memberName}(memberName = ${familyMember.memberName})}">edit</a></td>
-        <td><a th:href="@{/familymember/delete/{memberID}(memberID = ${familyMember.memberID})}">delete</a></td>
+        <td th:unless="${familyMember.memberName.equals('Not yet assigned')}"><a th:href="@{/familymember/edit/{memberName}(memberName = ${familyMember.memberName})}">edit</a></td>
+        <td th:unless="${familyMember.memberName.equals('Not yet assigned')}"><a th:href="@{/familymember/delete/{memberID}(memberID = ${familyMember.memberID})}">delete</a></td>
     </tr>
     </tbody>
 </table>

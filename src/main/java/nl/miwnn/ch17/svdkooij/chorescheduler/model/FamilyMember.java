@@ -57,4 +57,7 @@ public class FamilyMember {
         this.memberName = memberName;
     }
 
+    public Set<Chore> getChores() {
+        return chores;
+    }
 }

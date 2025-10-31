@@ -1,6 +1,7 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.controller;
 
 
+import nl.miwnn.ch17.svdkooij.chorescheduler.model.Chore;
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.FamilyMember;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
@@ -18,9 +19,10 @@ import java.util.Optional;
  */
 
 @Controller
-@RequestMapping("/familymember")
+@RequestMapping({"/familymember", "/familymembers"})
 public class familyMemberController {
 
+    private static final String NOT_YET_ASSIGNED_NAME = "Not yet assigned";
     private final FamilyMemberRepository familyMemberRepository;
     private final ScheduleRepository scheduleRepository;
 
@@ -48,8 +50,10 @@ public class familyMemberController {
     public String editFamilyMember(@PathVariable("name") String name, Model datamodel) {
         Optional<FamilyMember> optionalFamilyMember = familyMemberRepository.findByMemberName(name);
 
-        if (optionalFamilyMember.isPresent()) {
-            return showFamilyMemberForm(datamodel, optionalFamilyMember.get());
+        if (!name.equals(NOT_YET_ASSIGNED_NAME)) {
+            if (optionalFamilyMember.isPresent()) {
+                return showFamilyMemberForm(datamodel, optionalFamilyMember.get());
+            }
         }
 
         return "redirect:/familymember/all";
@@ -78,7 +82,23 @@ public class familyMemberController {
 
     @GetMapping("/delete/{id}")
     public String deleteFamilyMember(@PathVariable("id") Long memberID, Model datamodel) {
-        familyMemberRepository.deleteById(memberID);
+
+        Optional<FamilyMember> familyMember = familyMemberRepository.findById(memberID);
+        Optional<FamilyMember> newFamilyMember = familyMemberRepository.findByMemberName(NOT_YET_ASSIGNED_NAME);
+
+        if (familyMember.isPresent() && newFamilyMember.isPresent()) {
+            FamilyMember familyMemberToBeDeleted = familyMember.get();
+            FamilyMember familyMemberToAssignChoresTo = newFamilyMember.get();
+
+            if (!familyMemberToBeDeleted.getMemberName().equals(NOT_YET_ASSIGNED_NAME)) {
+                for (Chore chore : familyMemberToBeDeleted.getChores() ) {
+                    chore.setFamilyMember(familyMemberToAssignChoresTo);
+                }
+
+                familyMemberRepository.deleteById(memberID);
+            }
+        }
+
         return "redirect:/familymember/";
     }
 
