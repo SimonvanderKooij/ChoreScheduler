@@ -1,0 +1,69 @@
+body {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.1rem;
+    background-color: #f8fafc;
+    color: #333;
+    line-height: 1.6;
+    padding: 50px;
+
+}
+
+/* Navbar styling */
+.navbar-custom {
+    background: linear-gradient(90deg, #007bff 0%, #00c9a7 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    color: darkgreen;
+}
+
+/* Algemene layout */
+.container {
+    max-width: inherit;
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+footer {
+    margin-top: 1rem;
+}
+
+h1, h2 {
+    color: royalblue;
+    font-weight: 200;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+.pageContainer {
+    margin: 2rem;
+}
+
+/* Icon rows adapted*/
+.icon-column {
+    width: 1%;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.table-striped > tbody > tr > .icon-column {
+    background-color: transparent !important;
+}
+
+.icon-column i {
+    font-size: 1.3rem;
+    vertical-align: middle;
+}
+
+.edit-icon i {
+    color: green;
+}

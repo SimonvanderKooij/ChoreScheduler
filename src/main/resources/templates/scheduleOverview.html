@@ -2,33 +2,38 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 
 <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
-    <title>Overview of all the chores</title>
+    <title>Chore Scheduler - Schedules</title>
 </head>
 <body>
 
 <div th:replace="~{fragments/general :: navbar}"></div>
-<h1>Overview of all scheduled chores</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Date</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="schedule : ${allScheduledChores}">
-        <td><a th:href="@{/schedule/detail/{dueDate}(dueDate = ${schedule.dueDate})}"
-               th:text="${schedule.dayOfWeek}"></a></td>
-        <td><a th:href="@{/schedule/detail/{dueDate}(dueDate = ${schedule.dueDate})}"
-               th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></a></td>
-        <td><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}">edit</a></td>
-        <td><a th:href="@{/schedule/delete/{scheduleID}(scheduleID = ${schedule.scheduleID})}">delete</a></td>
-    </tr>
-    </tbody>
-</table>
 
-<a th:href="@{/schedule/plan}">Plan chores on another day</a>
+<div class="pageContainer">
+    <h1>Schedules</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Day</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="schedule : ${allScheduledChores}">
+            <td><a th:href="@{/schedule/detail/{dueDate}(dueDate = ${schedule.dueDate})}"
+                   th:text="${schedule.dayOfWeek}"></a></td>
+            <td><a th:href="@{/schedule/detail/{dueDate}(dueDate = ${schedule.dueDate})}"
+                   th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></a></td>
+            <td class="icon-column"><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}">edit</a></td>
+            <td class="icon-column"><a th:href="@{/schedule/delete/{scheduleID}(scheduleID = ${schedule.scheduleID})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" th:href="@{/schedule/plan}" role="button">Plan chores on another day</a>
+</div>
 
 </body>
+
+<div th:replace="~{fragments/general :: footer}"></div>
 
 </html>

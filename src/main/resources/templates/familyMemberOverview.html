@@ -2,32 +2,46 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 
 <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
-    <title>Overview of all the chores</title>
+    <title>Chore scheduler - family</title>
 </head>
 <body>
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<h1>Overview of all family members</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="familyMember : ${allFamilyMembers}">
-        <td th:text="${familyMember.memberName}"></td>
-        <td th:text="${familyMember.getTotalChoreTimeOutOfAllChores()}"></td>
-        <td th:unless="${familyMember.memberName.equals('Not yet assigned')}"><a th:href="@{/familymember/edit/{memberName}(memberName = ${familyMember.memberName})}">edit</a></td>
-        <td th:unless="${familyMember.memberName.equals('Not yet assigned')}"><a th:href="@{/familymember/delete/{memberID}(memberID = ${familyMember.memberID})}">delete</a></td>
-    </tr>
-    </tbody>
-</table>
+<div class="pageContainer">
+    <h1>Family members</h1>
 
-<a th:href="@{/familymember/add}">add another family member</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Time Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="familyMember : ${allFamilyMembers}">
+            <td th:text="${familyMember.memberName}"></td>
+            <td th:text="${familyMember.getTotalChoreTimeOutOfAllChores()}"></td>
+            <td class="icon-column" th:unless="${familyMember.memberName.equals('Not yet assigned')}">
+                <a th:href="@{/familymember/edit/{memberName}(memberName = ${familyMember.memberName})}"
+                   class="text-decoration-none text-primary edit-icon"
+                   title="Edit">
+                <i class="bi bi-pencil-square"></i>
+            </a></td>
+            <td class="icon-column" th:unless="${familyMember.memberName.equals('Not yet assigned')}">
+                <a th:href="@{/familymember/delete/{memberID}(memberID = ${familyMember.memberID})}"
+                   class="text-decoration-none text-danger"
+                   title="Remove">
+                <i class="bi bi-trash"></i>
+            </a></td>
+        </tr>
+        </tbody>
+    </table>
 
+    <a class="btn btn-primary" th:href="@{/familymember/add}" role="button">add another family member</a>
+</div>
 </body>
+
+<div th:replace="~{fragments/general :: footer}"></div>
 
 </html>

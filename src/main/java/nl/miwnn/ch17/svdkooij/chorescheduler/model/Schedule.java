@@ -36,8 +36,9 @@ public class Schedule {
     public Schedule() {
     }
 
-    public DayOfWeek getDayOfWeek() {
-        return dueDate.getDayOfWeek();
+    public String getDayOfWeek() {
+        String dayOfWeekString = dueDate.getDayOfWeek().toString();
+        return dayOfWeekString.charAt(0) + dayOfWeekString.toLowerCase().substring(1);
     }
 
     public LocalTime getTotalChoreTime(FamilyMember familyMember) {
