@@ -40,8 +40,17 @@ h1, h2 {
     text-align: center;
 }
 
+thead {
+    font-size: x-large;
+}
+
 p {
     margin-bottom: 1rem;
+}
+
+.bottom-buttons {
+    margin-top: 40px;
+
 }
 
 .pageContainer {

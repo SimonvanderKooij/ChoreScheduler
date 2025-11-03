@@ -13,23 +13,33 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="schedule : ${allScheduledChores}">
-            <td><a th:href="@{/schedule/detail/{dueDate}(dueDate = ${schedule.dueDate})}"
-                   th:text="${schedule.dayOfWeek}"></a></td>
-            <td><a th:href="@{/schedule/detail/{dueDate}(dueDate = ${schedule.dueDate})}"
-                   th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></a></td>
-            <td class="icon-column"><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}">edit</a></td>
-            <td class="icon-column"><a th:href="@{/schedule/delete/{scheduleID}(scheduleID = ${schedule.scheduleID})}">delete</a></td>
+            <td><a th:text="${schedule.dayOfWeek}"></a></td>
+            <td><a th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></a></td>
+            <td class="icon-column"><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}"
+                                       class="text-decoration-none text-primary edit-icon"
+                                       title="Edit">
+                <i class="bi bi-pencil-square"></i>
+            </a></td>
+            <td class="icon-column"><a th:href="@{/schedule/delete/{scheduleID}(scheduleID = ${schedule.scheduleID})}"
+                                       class="text-decoration-none text-danger"
+                                       title="Remove">
+                <i class="bi bi-trash"></i>
+            </a></td>
+            <td class="icon-column"><a class="btn btn-primary" th:href="@{/schedule/detail/{dueDate}(dueDate = ${schedule.dueDate})}" role="button">Details</a></td>
         </tr>
         </tbody>
     </table>
 
-    <a class="btn btn-primary" th:href="@{/schedule/plan}" role="button">Plan chores on another day</a>
+    <div class="bottom-buttons">
+        <a class="btn btn-primary" th:href="@{/schedule/plan}" role="button">Plan chores on another day</a>
+    </div>
 </div>
 
 </body>
