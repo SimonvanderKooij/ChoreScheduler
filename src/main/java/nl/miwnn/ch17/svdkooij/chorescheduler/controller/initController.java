@@ -37,12 +37,13 @@ public class initController {
     @EventListener
     private void seed(ContextRefreshedEvent ignoredEvent) {
         if (scheduleRepository.count() == 0 && familyMemberRepository.count() == 0 && choreRepository.count() == 0) {
+            makeFamilyMember("Not yet assigned");
             makeFamilyMember("Simon");
             makeFamilyMember("Carolien");
             makeFamilyMember("Lilian");
             makeFamilyMember("Nova");
             makeFamilyMember("Joas");
-            makeFamilyMember("Not yet assigned");
+
 
             Chore stofzuigen = makeChore("Stofzuigen", LocalTime.of(0,30), "Joas");
             Chore vaatwasser = makeChore("Vaatwasser uitruimen", LocalTime.of(0,15), "Nova");

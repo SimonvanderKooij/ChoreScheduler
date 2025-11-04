@@ -34,6 +34,11 @@
                    title="Remove">
                 <i class="bi bi-trash"></i>
             </a></td>
+            <td class="icon-column" th:unless="${familyMember.memberName.equals('Not yet assigned')}">
+                <a class="btn btn-primary"
+                   th:href="@{/familymember/detail/{name}(name = ${familyMember.memberName})}" role="button">Details
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>

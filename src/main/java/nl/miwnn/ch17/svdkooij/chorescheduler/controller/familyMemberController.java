@@ -1,8 +1,9 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.controller;
 
-
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.Chore;
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.FamilyMember;
+import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
+import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Simon van der Kooij
@@ -25,10 +26,12 @@ public class familyMemberController {
     private static final String NOT_YET_ASSIGNED_NAME = "Not yet assigned";
     private final FamilyMemberRepository familyMemberRepository;
     private final ScheduleRepository scheduleRepository;
+    private final ChoreRepository choreRepository;
 
-    public familyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository) {
+    public familyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository, ChoreRepository choreRepository) {
         this.familyMemberRepository = familyMemberRepository;
         this.scheduleRepository = scheduleRepository;
+        this.choreRepository = choreRepository;
     }
 
     @GetMapping({"/all", "/"})
@@ -44,6 +47,31 @@ public class familyMemberController {
         datamodel.addAttribute("formMember", familyMemberRepository.findAll());
 
         return showFamilyMemberForm(datamodel, new FamilyMember());
+    }
+
+    @GetMapping("/detail/{name}")
+    public String showFamilyMemberDetailView(@PathVariable("name") String name, Model datamodel) {
+        Optional<FamilyMember> optionalFamilyMember = familyMemberRepository.findByMemberName(name);
+
+        if (!name.equals(NOT_YET_ASSIGNED_NAME) && optionalFamilyMember.isPresent()) {
+
+            Set<Chore> choresBelongingToMember = choreRepository.findAllByFamilyMember(optionalFamilyMember.get());
+            Set<Schedule> schedulesBelongingToMember = new HashSet<>();
+
+            for (Chore chore : choresBelongingToMember) {
+                for (Schedule schedule : chore.getSchedules()) {
+                    schedulesBelongingToMember.add(schedule);
+                }
+            }
+
+            datamodel.addAttribute("formMember", optionalFamilyMember.get());
+            datamodel.addAttribute("chores", choresBelongingToMember);
+            datamodel.addAttribute("schedules", schedulesBelongingToMember);
+            return "familyMemberDetailView";
+
+        }
+
+        return "redirect:/familymember/all";
     }
 
     @GetMapping("/edit/{name}")

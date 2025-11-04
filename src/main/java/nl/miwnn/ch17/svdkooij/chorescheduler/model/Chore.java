@@ -46,6 +46,8 @@ public class Chore {
         return totalChoreTime;
     }
 
+
+
     public Long getChoreID() {
         return choreID;
     }

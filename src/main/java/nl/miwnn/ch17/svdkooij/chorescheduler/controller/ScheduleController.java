@@ -33,7 +33,7 @@ public class ScheduleController {
 
     @GetMapping({"/all", "/"})
     public String showAllScheduledChores(Model datamodel) {
-        datamodel.addAttribute("allScheduledChores", scheduleRepository.findAll());
+        datamodel.addAttribute("schedules", scheduleRepository.findAll());
         return "scheduleOverview";
     }
 
