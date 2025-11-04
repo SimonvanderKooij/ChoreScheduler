@@ -91,7 +91,7 @@ public class ScheduleController {
 
         scheduleRepository.save(scheduleToBeSaved);
 
-        return "redirect:/schedule/";
+        return "redirect:/schedule/detail/" + scheduleToBeSaved.getDueDate().toString();
     }
 
     private String showPlanningForm(Model datamodel, Schedule schedule) {
