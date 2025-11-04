@@ -47,13 +47,22 @@ h2 {
     color: green;
 }
 
+p {
+    margin-bottom: 1rem;
+}
+
+/* tabellen */
 thead {
     font-size: x-large;
     border-bottom-color: green;
 }
 
-p {
-    margin-bottom: 1rem;
+#red {
+    color: red;
+}
+
+#green {
+    color: green;
 }
 
 .bottom-buttons {

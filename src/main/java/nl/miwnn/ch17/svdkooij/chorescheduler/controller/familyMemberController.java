@@ -36,6 +36,7 @@ public class familyMemberController {
 
     @GetMapping({"/all", "/"})
     public String showAllFamilyMembers(Model datamodel) {
+
         datamodel.addAttribute("allFamilyMembers", familyMemberRepository.findAll());
         datamodel.addAttribute("allScheduledChores", scheduleRepository.findAll());
 

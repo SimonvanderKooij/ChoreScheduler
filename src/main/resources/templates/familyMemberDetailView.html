@@ -10,9 +10,9 @@
         <h1>Details on
             <span th:text="${formMember.memberName}"></span>
         </h1>
-        <h2>Chores done by <span th:text="${formMember.memberName}"></span></h2>
+        <h2>Chores usually done by <span th:text="${formMember.memberName}"></span>:</h2>
         <div th:replace="~{fragments/tables :: choretable}"></div>
-        <h2>Schedules of <span th:text="${formMember.memberName}"></span></h2>
+        <h2><span th:text="${formMember.memberName}"></span> has been scheduled on:</h2>
         <div th:replace="~{fragments/tables :: scheduletable}"></div>
 
     </div>

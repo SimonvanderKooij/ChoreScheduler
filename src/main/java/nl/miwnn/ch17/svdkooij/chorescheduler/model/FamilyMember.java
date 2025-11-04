@@ -2,8 +2,12 @@ package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.Set;
+
+import static java.lang.Math.abs;
 
 /**
  * @author Simon van der Kooij
@@ -39,6 +43,35 @@ public class FamilyMember {
 
         }
         return totalChoreTime;
+    }
+
+    public String returnAheadOrBehind(Set<FamilyMember> familyMembers) {
+        LocalTime totalOfAllMembers = LocalTime.of(0, 0);
+
+        for (FamilyMember familyMember : familyMembers) {
+            if (!Objects.equals(familyMember.memberName, "Not yet assigned")) {
+                totalOfAllMembers = totalOfAllMembers.plusHours(familyMember.getTotalChoreTimeOutOfAllChores().getHour())
+                        .plusMinutes(familyMember.getTotalChoreTimeOutOfAllChores().getMinute());
+            }
+        }
+        int nrOfMinutes = (totalOfAllMembers.getHour() * 60) + (totalOfAllMembers.getMinute());
+
+        int meanNrOfMinutes = nrOfMinutes / ( familyMembers.size() - 1);
+
+        int selfNrOfMinutes = (this.getTotalChoreTimeOutOfAllChores().getHour() * 60) +
+                (this.getTotalChoreTimeOutOfAllChores().getMinute());
+
+        int difference = selfNrOfMinutes - meanNrOfMinutes;
+        String returnString;
+
+        if (difference < 0) {
+            returnString = "-";
+            difference = abs(difference);
+        } else {
+            returnString = "+";
+        }
+
+        return returnString + LocalTime.of(difference / 60, difference % 60).toString();
     }
 
     public Long getMemberID() {

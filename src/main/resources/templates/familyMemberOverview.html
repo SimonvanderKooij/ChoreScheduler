@@ -16,12 +16,19 @@
         <tr>
             <th>Name</th>
             <th>Time Total</th>
+            <th>Ahead/behind</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="familyMember : ${allFamilyMembers}">
             <td th:text="${familyMember.memberName}"></td>
             <td th:text="${familyMember.getTotalChoreTimeOutOfAllChores()}"></td>
+            <td th:unless="${familyMember.memberName.equals('Not yet assigned')}"
+                th:if="${familyMember.returnAheadOrBehind(allFamilyMembers).startsWith('-')}"
+                th:text="${familyMember.returnAheadOrBehind(allFamilyMembers)}" id="red"></td>
+            <td th:unless="${familyMember.memberName.equals('Not yet assigned')}"
+                th:if="${familyMember.returnAheadOrBehind(allFamilyMembers).startsWith('+')}"
+                th:text="${familyMember.returnAheadOrBehind(allFamilyMembers)}" id="green"></td>
             <td class="icon-column" th:unless="${familyMember.memberName.equals('Not yet assigned')}">
                 <a th:href="@{/familymember/edit/{memberName}(memberName = ${familyMember.memberName})}"
                    class="text-decoration-none text-primary edit-icon"

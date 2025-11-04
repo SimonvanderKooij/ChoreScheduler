@@ -13,12 +13,15 @@
     <tr>
         <th>Weekday</th>
         <th>Date</th>
+        <th>Chores total</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="schedule : ${schedules}">
         <td><a th:text="${schedule.dayOfWeek}"></a></td>
         <td><a th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></a></td>
+        <td><a th:text="${schedule.getNumberOfChores()}"></a></td>
+
         <td class="icon-column"><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}"
                                    class="text-decoration-none text-primary edit-icon"
                                    title="Edit">
