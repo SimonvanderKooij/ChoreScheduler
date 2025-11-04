@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Schedule a chore</title>
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title th:if="${formPlanning.dueDate == null}">Add a new chore schedule</title>
+    <title th:unless="${formPlanning.dueDate == null}">Edit chore schedule</title>
 </head>
+
 <body>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
-<h1>Schedule a chore</h1>
+<div class="pageContainer">
+    <h1 th:if="${formPlanning.dueDate == null}">Add a new chore schedule</h1>
+    <h1 th:unless="${formPlanning.dueDate == null}">Edit chore schedule</h1>
 
-<form th:action="@{/schedule/save}" method="post" th:object="${formPlanning}">
+    <form class="input-form" th:action="@{/schedule/save}" method="post" th:object="${formPlanning}">
     <input type="hidden" th:field="*{scheduleID}"/>
-    Date: <input type="date" th:field="*{dueDate}" required>
-    Chores: <select th:field="*{chores}" multiple required>
+
+    <div class="form-group">
+        <label for="scheduleDate">Chore:</label>
+        <input id="scheduleDate" class="form-control" type="date" th:field="*{dueDate}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="choreSelect">Chores:</label>
+        <select id="choreSelect" class="form-select" type="date" th:field="*{chores}" size="10" multiple required>
             <option th:each="chore : ${allChores}"
                     th:text="${chore.choreName} + ' (door ' + ${chore.familyMember.memberName} + ')'"
                     th:value="${chore.choreID}">
             </option>
-</select>
+        </select>
+    </div>
 
-    <input type="submit" value="Save schedule">
+    <div class="bottom-buttons">
+        <input class="btn btn-primary" type="submit" value="Save schedule">
+    </div>
+
 </form>
 
 </body>

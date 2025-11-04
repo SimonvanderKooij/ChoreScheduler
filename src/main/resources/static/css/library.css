@@ -42,6 +42,7 @@ h1, h2 {
 
 thead {
     font-size: x-large;
+    border-bottom-color: green;
 }
 
 p {
@@ -50,11 +51,11 @@ p {
 
 .bottom-buttons {
     margin-top: 40px;
-
 }
 
 .pageContainer {
     margin: 2rem;
+
 }
 
 /* Icon rows adapted*/
@@ -74,5 +75,23 @@ p {
 }
 
 .edit-icon i {
+    color: green;
+}
+
+/* forms */
+.input-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 50%;
+    min-width: 300px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
     color: green;
 }
