@@ -1,9 +1,13 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,25 +15,23 @@ import static java.lang.Math.abs;
 
 /**
  * @author Simon van der Kooij
- * These are the chores that can be added to the planning and can be done by the familymembers
+ * These are the familymembers who do the chores. These are also the users that can log in.
  */
 
 @Entity
-public class FamilyMember {
+public class FamilyMember implements UserDetails {
 
     @Id
     @GeneratedValue
-    Long memberID;
-    String memberName;
+    private Long memberID;
+
+    @Column(unique = true)
+    private String memberName;
+
+    private String password;
 
     @OneToMany(mappedBy = "familyMember")
     private Set<Chore> chores;
-
-    public FamilyMember(Long memberID, String memberName, Set<Chore> chores) {
-        this.memberID = memberID;
-        this.memberName = memberName;
-        this.chores = chores;
-    }
 
     public FamilyMember() {
     }
@@ -92,5 +94,40 @@ public class FamilyMember {
 
     public Set<Chore> getChores() {
         return chores;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return memberName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
