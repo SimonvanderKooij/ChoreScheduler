@@ -13,7 +13,8 @@
     <tr>
         <th>Weekday</th>
         <th>Date</th>
-        <th>Chores total</th>
+        <th>No. of Chores</th>
+        <th>Duration</th>
     </tr>
     </thead>
     <tbody>
@@ -21,6 +22,8 @@
         <td><a th:text="${schedule.dayOfWeek}"></a></td>
         <td><a th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></a></td>
         <td><a th:text="${schedule.getNumberOfChores()}"></a></td>
+        <td><a th:text="${schedule.getTotalChoreTime(null)}"></a></td>
+
 
         <td class="icon-column"><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}"
                                    class="text-decoration-none text-primary edit-icon"
