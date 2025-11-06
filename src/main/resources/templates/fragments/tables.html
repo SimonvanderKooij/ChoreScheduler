@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -23,14 +23,12 @@
         <td><a th:text="${#temporals.format(schedule.dueDate, 'dd-MM-yyyy')}"></a></td>
         <td><a th:text="${schedule.getNumberOfChores()}"></a></td>
         <td><a th:text="${schedule.getTotalChoreTime(null)}"></a></td>
-
-
-        <td class="icon-column"><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}"
+        <td class="icon-column" sec:authorize="isAuthenticated"><a th:href="@{/schedule/edit/{scheduleDate}(scheduleDate = ${schedule.dueDate})}"
                                    class="text-decoration-none text-primary edit-icon"
                                    title="Edit">
             <i class="bi bi-pencil-square"></i>
         </a></td>
-        <td class="icon-column"><a th:href="@{/schedule/delete/{scheduleID}(scheduleID = ${schedule.scheduleID})}"
+        <td class="icon-column" sec:authorize="isAuthenticated"><a th:href="@{/schedule/delete/{scheduleID}(scheduleID = ${schedule.scheduleID})}"
                                    class="text-decoration-none text-danger"
                                    title="Remove">
             <i class="bi bi-trash"></i>
@@ -42,7 +40,7 @@
     </tbody>
 </table>
 
-<div class="bottom-buttons">
+<div class="bottom-buttons" sec:authorize="isAuthenticated">
     <a class="btn btn-primary" th:href="@{/schedule/plan}" role="button">Plan chores on another day</a>
 </div>
 </div>
@@ -61,12 +59,12 @@
             <td th:text="${chore.choreName}">Chore name</td>
             <td th:text="${chore.choreDuration}">Chore Duration</td>
             <td th:text="${chore.familyMember.memberName}">Specialist </td>
-            <td class="icon-column"><a th:href="@{/chore/edit/{choreID}(choreID = ${chore.choreID})}"
+            <td class="icon-column" sec:authorize="isAuthenticated"><a th:href="@{/chore/edit/{choreID}(choreID = ${chore.choreID})}"
                                        class="text-decoration-none text-primary edit-icon"
                                        title="Edit">
                 <i class="bi bi-pencil-square"></i>
             </a></td>
-            <td class="icon-column"><a th:href="@{/chore/delete/{choreID}(choreID = ${chore.choreID})}"
+            <td class="icon-column" sec:authorize="isAuthenticated"><a th:href="@{/chore/delete/{choreID}(choreID = ${chore.choreID})}"
                                        class="text-decoration-none text-danger"
                                        title="Remove">
                 <i class="bi bi-trash"></i>
@@ -74,7 +72,7 @@
         </tr>
         </tbody>
     </table>
-    <div class="bottom-buttons">
+    <div class="bottom-buttons" sec:authorize="isAuthenticated">
         <a class="btn btn-primary" th:href="@{/chore/add}" role="button">Add a new chore</a>
     </div>
 </div>

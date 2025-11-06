@@ -70,9 +70,6 @@ public class ChoreController {
             choreRepository.deleteById(choreID);
         }
 
-
-
-
         return "redirect:/chore/all";
     }
 

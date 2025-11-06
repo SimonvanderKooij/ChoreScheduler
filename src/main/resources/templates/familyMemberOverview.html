@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 
 <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
     <title>Chore scheduler - family</title>
@@ -29,13 +29,15 @@
             <td th:unless="${familyMember.memberName.equals('Not yet assigned')}"
                 th:if="${familyMember.returnAheadOrBehind(allFamilyMembers).startsWith('+')}"
                 th:text="${familyMember.returnAheadOrBehind(allFamilyMembers)}" id="green"></td>
-            <td class="icon-column" th:unless="${familyMember.memberName.equals('Not yet assigned')}">
+            <td class="icon-column" sec:authorize="isAuthenticated"
+                th:unless="${familyMember.memberName.equals('Not yet assigned')}">
                 <a th:href="@{/familymember/edit/{memberName}(memberName = ${familyMember.memberName})}"
                    class="text-decoration-none text-primary edit-icon"
                    title="Edit">
                 <i class="bi bi-pencil-square"></i>
             </a></td>
-            <td class="icon-column" th:unless="${familyMember.memberName.equals('Not yet assigned')}">
+            <td class="icon-column" sec:authorize="isAuthenticated"
+                th:unless="${familyMember.memberName.equals('Not yet assigned')}">
                 <a th:href="@{/familymember/delete/{memberID}(memberID = ${familyMember.memberID})}"
                    class="text-decoration-none text-danger"
                    title="Remove">
@@ -49,7 +51,7 @@
         </tr>
         </tbody>
     </table>
-    <div class="bottom-buttons">
+    <div class="bottom-buttons" sec:authorize="isAuthenticated">
         <a class="btn btn-primary" th:href="@{/familymember/add}" role="button">add another family member</a>
     </div>
 </div>

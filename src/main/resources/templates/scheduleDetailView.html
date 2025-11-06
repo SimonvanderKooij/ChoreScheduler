@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
     <title>Detailview chores on one day</title>
 </head>
@@ -31,7 +31,7 @@
             </tbody>
         </table>
 
-        <div class="bottom-buttons">
+        <div class="bottom-buttons" sec:authorize="isAuthenticated">
             <a class="btn btn-primary" th:href="@{/schedule/edit/{dueDate}(dueDate = ${schedule.dueDate})}" role="button">Add some more chores to this day</a>
         </div>
     </div>
