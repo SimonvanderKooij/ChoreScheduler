@@ -2,6 +2,7 @@ package nl.miwnn.ch17.svdkooij.chorescheduler.model;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Duration;
@@ -98,7 +99,7 @@ public class FamilyMember implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -106,10 +107,16 @@ public class FamilyMember implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return memberName;
     }
+
+
 
     @Override
     public boolean isAccountNonExpired() {

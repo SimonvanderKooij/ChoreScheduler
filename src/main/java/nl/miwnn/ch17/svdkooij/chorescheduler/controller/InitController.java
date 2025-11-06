@@ -7,6 +7,7 @@ import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
+import nl.miwnn.ch17.svdkooij.chorescheduler.service.FamilyMemberService;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
@@ -23,15 +24,17 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  */
 @Controller
-public class initController {
+public class InitController {
     private final FamilyMemberRepository familyMemberRepository;
     private final ChoreRepository choreRepository;
     private final ScheduleRepository scheduleRepository;
+    private final FamilyMemberService familyMemberService;
 
-    public initController(FamilyMemberRepository familyMemberRepository, ChoreRepository choreRepository, ScheduleRepository scheduleRepository) {
+    public InitController(FamilyMemberRepository familyMemberRepository, ChoreRepository choreRepository, ScheduleRepository scheduleRepository, FamilyMemberService familyMemberService) {
         this.familyMemberRepository = familyMemberRepository;
         this.choreRepository = choreRepository;
         this.scheduleRepository = scheduleRepository;
+        this.familyMemberService = familyMemberService;
     }
 
     @EventListener
@@ -62,8 +65,9 @@ public class initController {
         FamilyMember familyMember = new FamilyMember();
 
         familyMember.setMemberName(name);
+        familyMember.setPassword("2025");
 
-        familyMemberRepository.save(familyMember);
+        familyMemberService.saveUser(familyMember);
     }
 
     private Chore makeChore(String name, LocalTime duration, String familyMember) {

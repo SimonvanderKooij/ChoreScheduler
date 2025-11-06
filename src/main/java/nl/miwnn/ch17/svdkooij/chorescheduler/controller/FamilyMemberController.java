@@ -21,14 +21,14 @@ import java.util.*;
 
 @Controller
 @RequestMapping({"/familymember", "/familymembers"})
-public class familyMemberController {
+public class FamilyMemberController {
 
     private static final String NOT_YET_ASSIGNED_NAME = "Not yet assigned";
     private final FamilyMemberRepository familyMemberRepository;
     private final ScheduleRepository scheduleRepository;
     private final ChoreRepository choreRepository;
 
-    public familyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository, ChoreRepository choreRepository) {
+    public FamilyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository, ChoreRepository choreRepository) {
         this.familyMemberRepository = familyMemberRepository;
         this.scheduleRepository = scheduleRepository;
         this.choreRepository = choreRepository;
@@ -98,7 +98,7 @@ public class familyMemberController {
         if (optionalMemberWithSameName.isPresent() && !optionalMemberWithSameName.get().getMemberID()
                 .equals(memberToBeSaved.getMemberID())) {
             result.addError(new FieldError("familyMember", "name",
-                    "this name is already in use by another familymember"));
+                    "this name is already in use by another family member"));
         }
 
         if (result.hasErrors()) {
