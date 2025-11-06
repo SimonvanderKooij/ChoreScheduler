@@ -7,10 +7,7 @@ import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Optional;
@@ -21,6 +18,7 @@ import java.util.Optional;
  */
 
 @Controller
+@RequestMapping("/chore")
 public class ChoreController {
 
     private final ChoreRepository choreRepository;
@@ -31,7 +29,7 @@ public class ChoreController {
         this.familyMemberRepository = familyMemberRepository;
     }
 
-    @GetMapping({"/chore/all", "/", "/chore", "/chores"})
+    @GetMapping({"/all", "/" })
     private String showChoreOverview(Model datamodel) {
 
         datamodel.addAttribute("chores", choreRepository.findAll());
@@ -39,14 +37,14 @@ public class ChoreController {
         return "choreOverview";
     }
 
-    @GetMapping("/chore/add")
+    @GetMapping("/add")
     private String addChore(Model datamodel) {
         showChoreForm(datamodel, new Chore());
 
         return "choreForm";
     }
 
-    @PostMapping("/chore/save")
+    @PostMapping("/save")
     public String saveOrUpdateChore(@ModelAttribute("formChore") Chore chore, BindingResult result) {
 
         if (!result.hasErrors()) {
@@ -56,7 +54,7 @@ public class ChoreController {
         return "redirect:/chore/all";
     }
 
-    @GetMapping("/chore/delete/{choreID}")
+    @GetMapping("/delete/{choreID}")
     public String deleteChore(@PathVariable("choreID") Long choreID) {
         Optional<Chore> chore = choreRepository.findById(choreID);
 
@@ -73,7 +71,7 @@ public class ChoreController {
         return "redirect:/chore/all";
     }
 
-    @GetMapping("/chore/edit/{choreID}")
+    @GetMapping("/edit/{choreID}")
     public String editChore(@PathVariable("choreID") Long choreID, Model datamodel) {
         Optional<Chore> optionalChore = choreRepository.findById(choreID);
 
