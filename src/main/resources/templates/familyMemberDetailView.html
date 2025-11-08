@@ -15,7 +15,7 @@
         <h2><span th:text="${formMember.memberName}"></span> has been scheduled on:</h2>
         <div th:replace="~{fragments/tables :: scheduletable}"></div>
     <div class="pageContainer">
-        <div><a class="btn btn-primary" th:href="@{/logout}" role="button">
+        <div sec:authorize="isAuthenticated()"><a class="btn btn-primary" th:href="@{/logout}" role="button">
             Log <span sec:authentication="name"></span> out</a></div>
     </div>
 </body>
