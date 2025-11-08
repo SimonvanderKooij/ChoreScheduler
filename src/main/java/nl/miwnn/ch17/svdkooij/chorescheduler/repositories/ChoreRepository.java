@@ -12,4 +12,6 @@ import java.util.Set;
 public interface ChoreRepository extends JpaRepository<Chore, Long> {
 
     Set<Chore> findAllByFamilyMember(FamilyMember familyMember);
+
+    Optional<Chore> findByChoreID(Long choreID);
 }

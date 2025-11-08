@@ -21,8 +21,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class ChoreScheduleSecurityConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(ChoreScheduleSecurityConfig.class);
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity

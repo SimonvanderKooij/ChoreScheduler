@@ -65,9 +65,7 @@ public class FamilyMemberController {
             Set<Schedule> schedulesBelongingToMember = new HashSet<>();
 
             for (Chore chore : choresBelongingToMember) {
-                for (Schedule schedule : chore.getSchedules()) {
-                    schedulesBelongingToMember.add(schedule);
-                }
+                schedulesBelongingToMember.addAll(chore.getSchedules());
             }
 
             datamodel.addAttribute("formMember", optionalFamilyMember.get());

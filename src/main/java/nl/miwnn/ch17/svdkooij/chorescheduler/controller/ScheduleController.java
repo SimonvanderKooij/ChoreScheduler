@@ -1,7 +1,7 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.controller;
 
 
-import nl.miwnn.ch17.svdkooij.chorescheduler.model.FamilyMember;
+import nl.miwnn.ch17.svdkooij.chorescheduler.model.Chore;
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
@@ -65,9 +65,7 @@ public class ScheduleController {
         Optional<Schedule> scheduleToShow = scheduleRepository.findByDueDate(LocalDate.parse(dueDate));
 
         if (scheduleToShow.isEmpty()) {
-            Schedule newSchedule = new Schedule();
-            newSchedule.setDueDate(LocalDate.now());
-            scheduleRepository.save(newSchedule);
+            Schedule newSchedule = makeScheduleForToday();
 
             return "redirect:/schedule/detail/" + newSchedule.getDueDate();
         }
@@ -76,6 +74,37 @@ public class ScheduleController {
         return "scheduleDetailView";
     }
 
+
+
+    @GetMapping("/addChore/{choreID}")
+    public String addChoreToToday(@PathVariable("choreID") Long choreID, Model datamodel) {
+        Optional<Schedule> scheduleOfToday = scheduleRepository.findByDueDate(LocalDate.now());
+        Optional<Chore> optionalChore = choreRepository.findByChoreID(choreID);
+
+        if (optionalChore.isEmpty()) {
+            return "redirect:/";
+        }
+        Chore choreToBeAdded = optionalChore.get();
+
+        if (scheduleOfToday.isEmpty()) {
+            makeScheduleForToday();
+
+            return "redirect:/schedule/addChore/" + choreID;
+        }
+
+        Schedule scheduleToExtend = scheduleOfToday.get();
+        scheduleToExtend.getChores().add(choreToBeAdded);
+        scheduleRepository.save(scheduleToExtend);
+
+        return "redirect:/familymember/detail/" + choreToBeAdded.getFamilyMember().getMemberName();
+    }
+
+    private Schedule makeScheduleForToday() {
+        Schedule newSchedule = new Schedule();
+        newSchedule.setDueDate(LocalDate.now());
+        scheduleRepository.save(newSchedule);
+        return newSchedule;
+    }
     @PostMapping("/save")
     public String saveOrUpdateSchedule(@ModelAttribute("formPlanning") Schedule scheduleToBeSaved,
                                        BindingResult result,

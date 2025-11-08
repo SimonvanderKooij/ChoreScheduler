@@ -71,6 +71,9 @@
                                            title="Remove">
                     <i class="bi bi-trash"></i>
                 </a></td>
+                <td class="icon-column" sec:authorize="isAuthenticated"><a class="btn btn-primary"
+                                           th:href="@{/schedule/addChore/{choreID}(choreID = ${chore.choreID})}" role="button">Add to today</a>
+                </td>
             </tr>
         </tbody>
     </table>
