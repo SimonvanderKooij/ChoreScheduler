@@ -6,6 +6,7 @@ import nl.miwnn.ch17.svdkooij.chorescheduler.model.Schedule;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
+import nl.miwnn.ch17.svdkooij.chorescheduler.service.FamilyMemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,11 +28,13 @@ public class FamilyMemberController {
     private final FamilyMemberRepository familyMemberRepository;
     private final ScheduleRepository scheduleRepository;
     private final ChoreRepository choreRepository;
+    private final FamilyMemberService familyMemberService;
 
-    public FamilyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository, ChoreRepository choreRepository) {
+    public FamilyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository, ChoreRepository choreRepository, FamilyMemberService familyMemberService) {
         this.familyMemberRepository = familyMemberRepository;
         this.scheduleRepository = scheduleRepository;
         this.choreRepository = choreRepository;
+        this.familyMemberService = familyMemberService;
     }
 
     @GetMapping({"/all", "/"})
@@ -89,8 +92,8 @@ public class FamilyMemberController {
     }
 
     @PostMapping("/save")
-    public String saveOrUpdatePlanning(@ModelAttribute("formMember") FamilyMember memberToBeSaved,
-                                       BindingResult result, Model datamodel) {
+    public String saveOrUpdateFamilyMember(@ModelAttribute("formMember") FamilyMember memberToBeSaved,
+                                           BindingResult result, Model datamodel) {
 
         Optional<FamilyMember> optionalMemberWithSameName =
                 familyMemberRepository.findByMemberName(memberToBeSaved.getMemberName());
@@ -105,7 +108,8 @@ public class FamilyMemberController {
             return showFamilyMemberForm(datamodel, memberToBeSaved);
         }
 
-        familyMemberRepository.save(memberToBeSaved);
+        familyMemberService.saveUser(memberToBeSaved);
+//        familyMemberRepository.save(memberToBeSaved);
         return "redirect:/familymember/";
     }
 

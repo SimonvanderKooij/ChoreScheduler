@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+
 /**
  * @author Simon van der Kooij
  *
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainPageController {
 
     @GetMapping({"/"})
-    private String showChoreOverview(Model datamodel) {
+    private String showHomePage(Model datamodel) {
 
-        return "redirect:/chore/all";
+        return "redirect:/schedule/detail/" + LocalDate.now();
     }
 }

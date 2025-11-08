@@ -65,7 +65,11 @@ public class ScheduleController {
         Optional<Schedule> scheduleToShow = scheduleRepository.findByDueDate(LocalDate.parse(dueDate));
 
         if (scheduleToShow.isEmpty()) {
-            return "redirect:/schedule/all";
+            Schedule newSchedule = new Schedule();
+            newSchedule.setDueDate(LocalDate.now());
+            scheduleRepository.save(newSchedule);
+
+            return "redirect:/schedule/detail/" + newSchedule.getDueDate();
         }
 
         datamodel.addAttribute("schedule", scheduleToShow.get());
