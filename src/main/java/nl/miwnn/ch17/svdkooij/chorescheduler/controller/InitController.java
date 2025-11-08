@@ -30,7 +30,8 @@ public class InitController {
     private final ScheduleRepository scheduleRepository;
     private final FamilyMemberService familyMemberService;
 
-    public InitController(FamilyMemberRepository familyMemberRepository, ChoreRepository choreRepository, ScheduleRepository scheduleRepository, FamilyMemberService familyMemberService) {
+    public InitController(FamilyMemberRepository familyMemberRepository, ChoreRepository choreRepository,
+                          ScheduleRepository scheduleRepository, FamilyMemberService familyMemberService) {
         this.familyMemberRepository = familyMemberRepository;
         this.choreRepository = choreRepository;
         this.scheduleRepository = scheduleRepository;
@@ -47,16 +48,15 @@ public class InitController {
             makeFamilyMember("Nova");
             makeFamilyMember("Joas");
 
-
             Chore stofzuigen = makeChore("Stofzuigen", LocalTime.of(0,30), "Joas");
-            Chore vaatwasser = makeChore("Vaatwasser uitruimen", LocalTime.of(0,15), "Nova");
+            Chore vaat = makeChore("Vaatwasser uitruimen", LocalTime.of(0,15), "Nova");
             Chore was = makeChore("Was opruimen", LocalTime.of(0,45), "Lilian");
             Chore koken = makeChore("Koken", LocalTime.of(1,0), "Carolien");
             Chore keuken = makeChore("Keuken schoonmaken", LocalTime.of(0,45), "Simon");
 
-            makeSchedule(stofzuigen, vaatwasser, was);
+            makeSchedule(stofzuigen, vaat, was);
             makeSchedule(koken, keuken, was);
-            makeSchedule(stofzuigen, koken, vaatwasser);
+            makeSchedule(stofzuigen, koken, vaat);
 
         }
     }

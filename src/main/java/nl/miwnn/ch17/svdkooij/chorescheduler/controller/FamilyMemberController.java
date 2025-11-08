@@ -31,7 +31,8 @@ public class FamilyMemberController {
     private final ChoreRepository choreRepository;
     private final FamilyMemberService familyMemberService;
 
-    public FamilyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository, ChoreRepository choreRepository, FamilyMemberService familyMemberService) {
+    public FamilyMemberController(FamilyMemberRepository familyMemberRepository, ScheduleRepository scheduleRepository,
+                                  ChoreRepository choreRepository, FamilyMemberService familyMemberService) {
         this.familyMemberRepository = familyMemberRepository;
         this.scheduleRepository = scheduleRepository;
         this.choreRepository = choreRepository;
@@ -139,13 +140,11 @@ public class FamilyMemberController {
         return "redirect:/familymember/";
     }
 
-
     private String showFamilyMemberForm(Model datamodel, FamilyMember familyMember) {
         datamodel.addAttribute("formMember", familyMember);
         datamodel.addAttribute("allFamilyMembers", familyMemberRepository.findAll());
 
         return "familyMemberForm";
     }
-
 
 }

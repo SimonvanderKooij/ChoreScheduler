@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head th:fragment="baseheader(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">This is the base title</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/library.css" />
+</head>
+
+<body>
+
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <!-- Titel links -->
+            <a class="navbar-brand" href="/">Chore Scheduler</a>
+
+            <!-- Menu rechts -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/schedule/all}">Schedules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/chore/all}">Chores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/familymember/all}">Family members</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="nav-link" th:href="@{/login}"><i class="bi bi-lock-fill"></i></a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/familymember/detail/{name}(name=${#authentication.name})}">
+                            <i class="bi bi-unlock-fill"></i> <span sec:authentication="name"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div th:fragment="footer">
+    <footer>
+        <p class="text-center text text-muted">Created by Simon van der Kooij, commissioned by Make IT Work NN &copy;2025</p>
+    </footer>
+</div>
+
+<div th:fragment="bottomScripts">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</div>
+
+</body>
+</html>

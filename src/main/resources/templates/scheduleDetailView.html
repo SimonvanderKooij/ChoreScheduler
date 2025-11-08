@@ -32,7 +32,9 @@
         </table>
 
         <div class="bottom-buttons" sec:authorize="isAuthenticated">
-            <a class="btn btn-primary" th:href="@{/schedule/edit/{dueDate}(dueDate = ${schedule.dueDate})}" role="button">Add some more chores to this day</a>
+            <a class="btn btn-primary"
+               th:href="@{/schedule/edit/{dueDate}(dueDate = ${schedule.dueDate})}"
+               role="button">Add some more chores to this day</a>
         </div>
     </div>
 </body>

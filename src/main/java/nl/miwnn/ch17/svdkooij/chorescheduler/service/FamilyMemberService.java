@@ -1,9 +1,7 @@
 package nl.miwnn.ch17.svdkooij.chorescheduler.service;
 
-
 import nl.miwnn.ch17.svdkooij.chorescheduler.model.FamilyMember;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

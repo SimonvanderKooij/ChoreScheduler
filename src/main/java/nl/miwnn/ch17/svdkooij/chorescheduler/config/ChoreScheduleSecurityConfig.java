@@ -35,7 +35,6 @@ public class ChoreScheduleSecurityConfig {
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .logout((logout) -> logout.logoutSuccessUrl("/"));
 
-
         return httpSecurity.build();
     }
 

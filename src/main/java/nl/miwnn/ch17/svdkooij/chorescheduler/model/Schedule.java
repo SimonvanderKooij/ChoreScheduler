@@ -25,12 +25,6 @@ public class Schedule {
     @ManyToMany
     private Set<Chore> chores;
 
-    public Schedule(Long scheduleID, LocalDate dueDate, Set<Chore> chores) {
-        this.scheduleID = scheduleID;
-        this.dueDate = dueDate;
-        this.chores = chores;
-    }
-
     public Schedule() {
     }
 

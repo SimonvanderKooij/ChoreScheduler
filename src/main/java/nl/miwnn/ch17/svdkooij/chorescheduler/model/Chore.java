@@ -25,12 +25,6 @@ public class Chore {
     @ManyToMany(mappedBy = "chores")
     private Set<Schedule> schedules;
 
-    public Chore(Long choreID, String choreName, LocalTime choreDuration) {
-        this.choreID = choreID;
-        this.choreName = choreName;
-        this.choreDuration = choreDuration;
-    }
-
     public Chore() {
     }
 
@@ -45,8 +39,6 @@ public class Chore {
 
         return totalChoreTime;
     }
-
-
 
     public Long getChoreID() {
         return choreID;
