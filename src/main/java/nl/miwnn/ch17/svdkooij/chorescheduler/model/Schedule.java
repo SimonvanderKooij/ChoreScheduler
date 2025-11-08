@@ -48,10 +48,11 @@ public class Schedule {
         LocalTime totalChoreTime = LocalTime.of(0, 0);
 
         for (Chore chore : chores) {
-            if (chore.getFamilyMember() == familyMember) {
+            if (chore.getFamilyMember() == familyMember || familyMember == null) {
                 totalChoreTime = totalChoreTime .plusHours(chore.getChoreDuration().getHour())
                                                 .plusMinutes(chore.getChoreDuration().getMinute());
             }
+
         }
 
         return totalChoreTime;

@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
-<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
-    <title>Detailview family member</title>
-</head>
-<body>
-    <div th:replace="~{fragments/general :: navbar}"></div>
+    <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+        <title>Detailview family member</title>
+    </head>
+    <body>
+        <div th:replace="~{fragments/general :: navbar}"></div>
 
 
-        <h1>Details on
-            <span th:text="${formMember.memberName}"></span>
-        </h1>
-        <h2>Chores usually done by <span th:text="${formMember.memberName}"></span>:</h2>
-        <div th:replace="~{fragments/tables :: choretable}"></div>
-        <h2><span th:text="${formMember.memberName}"></span> has been scheduled on:</h2>
-        <div th:replace="~{fragments/tables :: scheduletable}"></div>
-    <div class="pageContainer">
-        <div sec:authorize="isAuthenticated()"><a class="btn btn-primary" th:href="@{/logout}" role="button">
-            Log <span sec:authentication="name"></span> out</a></div>
-    </div>
-</body>
-
+            <h1>Details on
+                <span th:text="${formMember.memberName}"></span>
+            </h1>
+            <h2>Chores usually done by <span th:text="${formMember.memberName}"></span>:</h2>
+            <div th:replace="~{fragments/tables :: choretable}"></div>
+            <h2><span th:text="${formMember.memberName}"></span> has been scheduled on:</h2>
+            <div th:replace="~{fragments/tables :: scheduletable}"></div>
+        <div class="pageContainer">
+            <div sec:authorize="isAuthenticated()"><a class="btn btn-primary" th:href="@{/logout}" role="button">
+                Log <span sec:authentication="name"></span> out</a></div>
+        </div>
+    </body>
 </html>

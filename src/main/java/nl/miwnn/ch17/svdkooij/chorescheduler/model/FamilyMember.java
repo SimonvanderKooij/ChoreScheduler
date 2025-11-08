@@ -116,8 +116,6 @@ public class FamilyMember implements UserDetails {
         return memberName;
     }
 
-
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
