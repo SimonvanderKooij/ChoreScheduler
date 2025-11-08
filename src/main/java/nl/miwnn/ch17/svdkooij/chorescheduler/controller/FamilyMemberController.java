@@ -7,6 +7,7 @@ import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ChoreRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.FamilyMemberRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.repositories.ScheduleRepository;
 import nl.miwnn.ch17.svdkooij.chorescheduler.service.FamilyMemberService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -109,12 +110,11 @@ public class FamilyMemberController {
         }
 
         familyMemberService.saveUser(memberToBeSaved);
-//        familyMemberRepository.save(memberToBeSaved);
         return "redirect:/familymember/";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteFamilyMember(@PathVariable("id") Long memberID, Model datamodel) {
+    public String deleteFamilyMember(@PathVariable("id") Long memberID, Authentication authentication) {
 
         Optional<FamilyMember> familyMember = familyMemberRepository.findById(memberID);
         Optional<FamilyMember> newFamilyMember = familyMemberRepository.findByMemberName(NOT_YET_ASSIGNED_NAME);
@@ -122,6 +122,10 @@ public class FamilyMemberController {
         if (familyMember.isPresent() && newFamilyMember.isPresent()) {
             FamilyMember familyMemberToBeDeleted = familyMember.get();
             FamilyMember familyMemberToAssignChoresTo = newFamilyMember.get();
+
+            if (familyMemberToBeDeleted.getMemberName().equals(authentication.getName())) {
+                return "redirect:/logout";
+            }
 
             if (!familyMemberToBeDeleted.getMemberName().equals(NOT_YET_ASSIGNED_NAME)) {
                 for (Chore chore : familyMemberToBeDeleted.getChores() ) {
